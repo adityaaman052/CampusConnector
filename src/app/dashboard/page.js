@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';                      // ⬅️ NEW
 import { auth, db } from '../../../lib/firebase';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
@@ -12,6 +13,7 @@ export default function DashboardPage() {
   const [activePolls, setActivePolls] = useState([]);
   const router = useRouter();
 
+  /* ───────────────────────────────────────────── */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (u) => {
       if (!u) {
@@ -37,7 +39,7 @@ export default function DashboardPage() {
             return {
               ...p,
               expiresAt: exp,
-              timeLeft: exp.getTime() - now.getTime()
+              timeLeft: exp.getTime() - now.getTime(),
             };
           });
 
@@ -46,24 +48,26 @@ export default function DashboardPage() {
     });
 
     return () => unsubscribe();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);   /* include `router` to silence the ESLint warning */
 
-  // Live countdown effect
+  /* ───────────────────────────────────────────── */
   useEffect(() => {
     const timer = setInterval(() => {
-      setActivePolls((prevPolls) =>
+      setActivePolls(prevPolls =>
         prevPolls
-          .map((poll) => {
+          .map(poll => {
             const newTimeLeft = poll.expiresAt.getTime() - new Date().getTime();
             return { ...poll, timeLeft: newTimeLeft };
           })
-          .filter((poll) => poll.timeLeft > 0) // Remove expired polls
+          .filter(poll => poll.timeLeft > 0)
       );
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
 
+  /* ───────────────────────────────────────────── */
   const handleLogout = async () => {
     await signOut(auth);
     router.push('/login');
@@ -77,6 +81,7 @@ export default function DashboardPage() {
     return `${mins}m ${secs}s`;
   };
 
+  /* ───────────────────────────────────────────── */
   return (
     <div style={{ padding: 40 }}>
       <h1>🎓 Campus Connect Dashboard</h1>
@@ -91,24 +96,22 @@ export default function DashboardPage() {
 
           <h2>🔗 Quick Links</h2>
           <ul>
-            <li><a href="/feed">📜 View Announcements</a></li>
-            <li><a href="/files">📁 Upload Files</a></li>
-            <li><a href="/chat">💬 Open Chat</a></li>
-            <li><a href="/users">💬 Private Chat</a></li>
-            <li><a href="/events">📅 View Events</a></li>
-            <li><a href="/polls">🗳 Participate in Polls</a></li>
-            <li><a href="/thread">🧵 Campus Threads</a></li>
+            <li><Link href="/feed">📜 View Announcements</Link></li>
+            <li><Link href="/files">📁 Upload Files</Link></li>
+            <li><Link href="/chat">💬 Open Chat</Link></li>
+            <li><Link href="/users">💬 Private Chat</Link></li>
+            <li><Link href="/events">📅 View Events</Link></li>
+            <li><Link href="/polls">🗳 Participate in Polls</Link></li>
+            <li><Link href="/thread">🧵 Campus Threads</Link></li>
 
             {role === 'admin' && (
               <>
-                <li><a href="/upload">📢 Post Announcement</a></li>
-                <li><a href="/admin">🛠 Admin Panel</a></li>
-                <li><a href="/events/create">➕ Create Event</a></li>
-                <li><a href="/polls/create">🗳 Create Poll</a></li>
-                <li><a href="/polls/results">📈 View Poll Results</a></li>
-                <li><a href="/admin/reports">🚨 View Reports</a></li>
-
-
+                <li><Link href="/upload">📢 Post Announcement</Link></li>
+                <li><Link href="/admin">🛠 Admin Panel</Link></li>
+                <li><Link href="/events/create">➕ Create Event</Link></li>
+                <li><Link href="/polls/create">🗳 Create Poll</Link></li>
+                <li><Link href="/polls/results">📈 View Poll Results</Link></li>
+                <li><Link href="/admin/reports">🚨 View Reports</Link></li>
               </>
             )}
           </ul>
@@ -118,7 +121,7 @@ export default function DashboardPage() {
               <hr />
               <h2>🕒 Active Polls (Live Countdown)</h2>
               <ul>
-                {activePolls.map((poll) => (
+                {activePolls.map(poll => (
                   <li key={poll.id}>
                     <strong>{poll.question}</strong> <br />
                     ⏳ Time left: {formatTime(poll.timeLeft)}

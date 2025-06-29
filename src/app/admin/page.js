@@ -11,27 +11,35 @@ export default function AdminPage() {
   const router = useRouter();
 
   useEffect(() => {
+    // register the listener once; include `router` so ESLint is happy
     const unsubscribe = auth.onAuthStateChanged(async (u) => {
       if (!u) {
         router.push('/login');
+        return;
+      }
+
+      const docSnap = await getDoc(doc(db, 'users', u.email));
+      const isUserAdmin = docSnap.exists() && docSnap.data().role === 'admin';
+
+      if (isUserAdmin) {
+        setUser(u);
+        setIsAdmin(true);
       } else {
-        const docSnap = await getDoc(doc(db, 'users', u.email));
-        if (docSnap.exists() && docSnap.data().role === 'admin') {
-          setUser(u);
-          setIsAdmin(true);
-        } else {
-          alert('You are not an admin!');
-          router.push('/dashboard');
-        }
+        alert('You are not an admin!');
+        router.push('/dashboard');
       }
     });
 
-    return () => unsubscribe();
-  }, []);
+    // return the unsubscribe function for cleanup
+    return unsubscribe;
+  }, [router]); // ✅ include router to satisfy the React‑Hooks ESLint rule
 
   return (
     <div style={{ padding: 40 }}>
-      {isAdmin ? <h2>🛠 Welcome Admin {user?.email}</h2> : <p>Checking access...</p>}
+      {isAdmin
+        ? <h2>🛠 Welcome Admin {user?.email}</h2>
+        : <p>Checking access...</p>
+      }
     </div>
   );
 }
