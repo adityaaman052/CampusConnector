@@ -2,18 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';                      // ⬅️ NEW
+import Link from 'next/link';
+import dynamic from 'next/dynamic'; // 🧠 Dynamic import for modal
+
 import { auth, db } from '../../../lib/firebase';
 import { signOut } from 'firebase/auth';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
+
+// 🔁 Dynamic import of modal
+const AIAssistantModal = dynamic(() => import('@/components/AIAssistantModal'), { ssr: false });
 
 export default function DashboardPage() {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState('');
   const [activePolls, setActivePolls] = useState([]);
+  const [showAI, setShowAI] = useState(false); // 🎯 Modal state
   const router = useRouter();
 
-  /* ───────────────────────────────────────────── */
+  // ✅ Auth + Fetch Polls
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (u) => {
       if (!u) {
@@ -39,7 +45,7 @@ export default function DashboardPage() {
             return {
               ...p,
               expiresAt: exp,
-              timeLeft: exp.getTime() - now.getTime(),
+              timeLeft: exp.getTime() - now.getTime()
             };
           });
 
@@ -48,10 +54,9 @@ export default function DashboardPage() {
     });
 
     return () => unsubscribe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);   /* include `router` to silence the ESLint warning */
+  }, [router]);
 
-  /* ───────────────────────────────────────────── */
+  // ⏱ Live countdown
   useEffect(() => {
     const timer = setInterval(() => {
       setActivePolls(prevPolls =>
@@ -67,7 +72,7 @@ export default function DashboardPage() {
     return () => clearInterval(timer);
   }, []);
 
-  /* ───────────────────────────────────────────── */
+  // 🔐 Logout
   const handleLogout = async () => {
     await signOut(auth);
     router.push('/login');
@@ -81,7 +86,6 @@ export default function DashboardPage() {
     return `${mins}m ${secs}s`;
   };
 
-  /* ───────────────────────────────────────────── */
   return (
     <div style={{ padding: 40 }}>
       <h1>🎓 Campus Connect Dashboard</h1>
@@ -103,6 +107,7 @@ export default function DashboardPage() {
             <li><Link href="/events">📅 View Events</Link></li>
             <li><Link href="/polls">🗳 Participate in Polls</Link></li>
             <li><Link href="/thread">🧵 Campus Threads</Link></li>
+            <li><button onClick={() => setShowAI(true)}>🤖 CampusAI Assistant</button></li>
 
             {role === 'admin' && (
               <>
@@ -132,6 +137,9 @@ export default function DashboardPage() {
           )}
         </div>
       )}
+
+      {/* 🌟 AI Assistant Modal */}
+      <AIAssistantModal isOpen={showAI} onClose={() => setShowAI(false)} />
     </div>
   );
 }
