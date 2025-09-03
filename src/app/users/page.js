@@ -131,7 +131,7 @@ export default function UsersPage() {
             </h3>
             <p className="text-gray-600 mb-6">
               {searchTerm 
-                ? `No users match &quot;${searchTerm}&quot;. Try a different search term.`
+                ? `No users match "${searchTerm}". Try a different search term.`
                 : 'There are no other users registered yet.'
               }
             </p>

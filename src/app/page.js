@@ -57,7 +57,7 @@ export default function CampusConnectLanding() {
                 Features
               </button>
               <button onClick={() => scrollToSection('benefits')} className="text-gray-700 hover:text-purple-600 transition-colors">
-                What You&#39;ll Get
+                What You will Get
               </button>
               <button onClick={() => scrollToSection('pricing')} className="text-gray-700 hover:text-purple-600 transition-colors">
                 Pricing
@@ -93,7 +93,7 @@ export default function CampusConnectLanding() {
                   Features
                 </button>
                 <button onClick={() => scrollToSection('benefits')} className="text-left px-4 py-2 text-gray-700 hover:text-purple-600">
-                  What You'll Get
+                  What You will Get
                 </button>
                 <button onClick={() => scrollToSection('pricing')} className="text-left px-4 py-2 text-gray-700 hover:text-purple-600">
                   Pricing
@@ -202,7 +202,7 @@ export default function CampusConnectLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              What You&#39;ll Get
+              What You will get
             </h2>
             <p className="text-xl text-purple-100 max-w-3xl mx-auto">
               Transform your campus experience with these incredible benefits
