@@ -268,7 +268,7 @@ export default function UsersPage() {
               <ul className="text-sm text-blue-700 space-y-1">
                 <li>• Browse through the list of available users</li>
                 <li>• Use the search bar to find specific people</li>
-                <li>• Click "Start Chat" to begin a private conversation</li>
+                <li>• Click Start Chat to begin a private conversation</li>
                 <li>• Your chats are secure and private</li>
               </ul>
             </div>
