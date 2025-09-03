@@ -1,102 +1,427 @@
-import Image from "next/image";
+"use client";
+import React, { useState, useEffect } from 'react';
+import { ChevronDown, Menu, X, Users, Calendar, MessageCircle, Upload, BarChart3, Bot, Bell, GraduationCap, Star, Check, Mail, ArrowRight, Zap, Shield, Clock } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Home() {
+export default function CampusConnectLanding() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(sectionId);
+    }
+    setIsMenuOpen(false);
+  };
+
+  const features = [
+    { icon: Bell, title: 'View Announcements', description: 'Stay updated with important campus announcements' },
+    { icon: Upload, title: 'Upload Files', description: 'Share documents and resources seamlessly' },
+    { icon: MessageCircle, title: 'Open Chat', description: 'Connect with your campus community' },
+    { icon: Users, title: 'Private Chat', description: 'Have private conversations with peers' },
+    { icon: Calendar, title: 'View Events', description: 'Never miss important campus events' },
+    { icon: BarChart3, title: 'Participate in Polls', description: 'Voice your opinion on campus matters' },
+    { icon: GraduationCap, title: 'Campus Threads', description: 'Join academic discussions' },
+    { icon: Bot, title: 'CampusAI Assistant', description: 'Get instant help with AI-powered support' }
+  ];
+
+  const benefits = [
+    { icon: Zap, title: 'Instant Connection', description: 'Connect with your entire campus community in real-time' },
+    { icon: Shield, title: 'Secure & Private', description: 'Your data is protected with enterprise-grade security' },
+    { icon: Clock, title: '24/7 Availability', description: 'Access your campus network anytime, anywhere' }
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-lg border-b border-purple-100 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-lg">C</span>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Campus Connect
+              </span>
+            </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <button onClick={() => scrollToSection('home')} className="text-gray-700 hover:text-purple-600 transition-colors">
+                Home
+              </button>
+              <button onClick={() => scrollToSection('features')} className="text-gray-700 hover:text-purple-600 transition-colors">
+                Features
+              </button>
+              <button onClick={() => scrollToSection('benefits')} className="text-gray-700 hover:text-purple-600 transition-colors">
+                What You'll Get
+              </button>
+              <button onClick={() => scrollToSection('pricing')} className="text-gray-700 hover:text-purple-600 transition-colors">
+                Pricing
+              </button>
+              <button onClick={() => scrollToSection('contact')} className="text-gray-700 hover:text-purple-600 transition-colors">
+                Contact
+              </button>
+              <Link
+                href="/login"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+              >
+                Login
+              </Link>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden py-4 bg-white/95 backdrop-blur-lg rounded-b-lg">
+              <div className="flex flex-col space-y-3">
+                <button onClick={() => scrollToSection('home')} className="text-left px-4 py-2 text-gray-700 hover:text-purple-600">
+                  Home
+                </button>
+                <button onClick={() => scrollToSection('features')} className="text-left px-4 py-2 text-gray-700 hover:text-purple-600">
+                  Features
+                </button>
+                <button onClick={() => scrollToSection('benefits')} className="text-left px-4 py-2 text-gray-700 hover:text-purple-600">
+                  What You'll Get
+                </button>
+                <button onClick={() => scrollToSection('pricing')} className="text-left px-4 py-2 text-gray-700 hover:text-purple-600">
+                  Pricing
+                </button>
+                <button onClick={() => scrollToSection('contact')} className="text-left px-4 py-2 text-gray-700 hover:text-purple-600">
+                  Contact
+                </button>
+                <div className="px-4">
+                  <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-full">
+                    Login
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </nav>
+
+      {/* Hero Section */}
+      <section id="home" className="pt-24 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-8 animate-pulse">
+              <Zap className="w-4 h-4 mr-2" />
+              Transforming Campus Communication
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              Connect Your Campus
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent block">
+                Like Never Before
+              </span>
+            </h1>
+
+            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              The ultimate platform for campus communication. Streamline announcements, events,
+              discussions, and community engagement all in one powerful app.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center"
+              >
+                Get Started <ArrowRight className="ml-2 w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scrollToSection('features')}
+                className="border-2 border-purple-600 text-purple-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-purple-600 hover:text-white transition-all duration-300 flex items-center"
+              >
+                Explore Features
+              </button>
+            </div>
+
+            {/* Hero Image/Dashboard Preview */}
+            <div className="relative max-w-4xl mx-auto">
+              <div className="bg-white rounded-2xl shadow-2xl p-8 border border-purple-100">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {features.slice(0, 4).map((feature, index) => (
+                    <div key={index} className="text-center p-4 rounded-xl bg-gradient-to-br from-purple-50 to-blue-50 hover:scale-105 transition-transform duration-300">
+                      <feature.icon className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                      <h3 className="font-semibold text-sm text-gray-800">{feature.title}</h3>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+              Powerful Features for
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent block">
+                Modern Campuses
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Everything your campus needs to stay connected, informed, and engaged
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="group p-6 rounded-2xl bg-gradient-to-br from-purple-50 to-blue-50 hover:from-purple-100 hover:to-blue-100 transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
+              >
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <feature.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What You'll Get Section */}
+      <section id="benefits" className="py-20 bg-gradient-to-r from-purple-600 to-blue-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+              What You'll Get
+            </h2>
+            <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+              Transform your campus experience with these incredible benefits
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="text-center p-8 rounded-2xl bg-white/10 backdrop-blur-lg hover:bg-white/20 transition-all duration-300">
+                <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <benefit.icon className="w-8 h-8 text-purple-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">{benefit.title}</h3>
+                <p className="text-purple-100 leading-relaxed">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center">
+            <div className="inline-block bg-white rounded-2xl p-8 shadow-2xl max-w-4xl">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Complete Campus Solution</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">8+</div>
+                  <div className="text-gray-600">Core Features</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">24/7</div>
+                  <div className="text-gray-600">Availability</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">100%</div>
+                  <div className="text-gray-600">Secure</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">∞</div>
+                  <div className="text-gray-600">Possibilities</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+              Simple, Transparent
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent block">
+                Pricing
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Get your entire campus connected for less than the cost of a coffee per student per month
+            </p>
+          </div>
+
+          <div className="max-w-md mx-auto">
+            <div className="relative p-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-3xl shadow-2xl transform hover:scale-105 transition-all duration-300">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                <div className="bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold flex items-center">
+                  <Star className="w-4 h-4 mr-1" />
+                  Most Popular
+                </div>
+              </div>
+
+              <div className="text-center text-white">
+                <h3 className="text-2xl font-bold mb-4">Campus Connect Pro</h3>
+                <div className="mb-6">
+                  <span className="text-5xl font-bold">₹499</span>
+                  <span className="text-xl opacity-80">/month</span>
+                </div>
+                <p className="text-purple-100 mb-8">
+                  Complete campus communication solution for your organization
+                </p>
+
+                <div className="space-y-4 mb-8">
+                  {[
+                    'All 8 Core Features',
+                    'Unlimited Users',
+                    'Real-time Messaging',
+                    'Event Management',
+                    'File Sharing',
+                    'Polls & Surveys',
+                    'AI Assistant',
+                    '24/7 Support',
+                    'Custom Branding',
+                    'Analytics Dashboard'
+                  ].map((feature, index) => (
+                    <div key={index} className="flex items-center">
+                      <Check className="w-5 h-5 text-green-300 mr-3" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => scrollToSection('contact')}
+                  className="w-full bg-white text-purple-600 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition-colors duration-300 flex items-center justify-center"
+                >
+                  Get Started Now <ArrowRight className="ml-2 w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-gray-600">
+              🎓 Special launch pricing • No setup fees • Cancel anytime
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+              Ready to Transform
+              <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent block">
+                Your Campus?
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Get access to the admin portal and explore all features before making a decision
+            </p>
+          </div>
+
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Mail className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Get Admin Access</h3>
+                <p className="text-gray-600 mb-8">
+                  Send us an email to get instant access to the admin portal where you can explore all features,
+                  customize settings, and see how Campus Connect can transform your organization.
+                </p>
+              </div>
+
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6 mb-8">
+                <div className="flex items-center justify-center mb-4">
+                  <Mail className="w-6 h-6 text-purple-600 mr-3" />
+                  <span className="text-lg font-semibold text-gray-900">Contact Email</span>
+                </div>
+                <div className="text-center">
+                  <a
+                    href="mailto:adityaaman.codex@gmail.com?subject=Campus Connect - Admin Portal Access Request&body=Hi, I'm interested in exploring Campus Connect for my organization. Please provide me access to the admin portal."
+                    className="text-2xl font-bold text-purple-600 hover:text-purple-700 transition-colors"
+                  >
+                    adityaaman.codex@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div className="text-center p-4 bg-green-50 rounded-xl">
+                  <div className="text-2xl font-bold text-green-600 mb-1">1</div>
+                  <div className="text-sm text-gray-600">Send Email</div>
+                </div>
+                <div className="text-center p-4 bg-blue-50 rounded-xl">
+                  <div className="text-2xl font-bold text-blue-600 mb-1">2</div>
+                  <div className="text-sm text-gray-600">Get Portal Access</div>
+                </div>
+                <div className="text-center p-4 bg-purple-50 rounded-xl">
+                  <div className="text-2xl font-bold text-purple-600 mb-1">3</div>
+                  <div className="text-sm text-gray-600">Explore Features</div>
+                </div>
+              </div>
+
+              <a
+                href="mailto:adityaaman.codex@gmail.com?subject=Campus Connect - Admin Portal Access Request&body=Hi, I'm interested in exploring Campus Connect for my organization. Please provide me access to the admin portal."
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-full font-bold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+              >
+                Request Admin Access <ArrowRight className="ml-2 w-5 h-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-lg">C</span>
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Campus Connect
+              </span>
+            </div>
+            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+              Transforming campus communication, one connection at a time.
+              Built with ❤️ for educational institutions everywhere.
+            </p>
+            <div className="flex justify-center space-x-8 mb-8">
+              <button onClick={() => scrollToSection('features')} className="text-gray-400 hover:text-white transition-colors">
+                Features
+              </button>
+              <button onClick={() => scrollToSection('pricing')} className="text-gray-400 hover:text-white transition-colors">
+                Pricing
+              </button>
+              <button onClick={() => scrollToSection('contact')} className="text-gray-400 hover:text-white transition-colors">
+                Contact
+              </button>
+            </div>
+            <div className="border-t border-gray-800 pt-8">
+              <p className="text-gray-400">
+                © 2025 Campus Connect. Made with passion for better campus communication.
+              </p>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );
