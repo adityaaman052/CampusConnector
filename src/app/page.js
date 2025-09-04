@@ -103,7 +103,11 @@ export default function CampusConnectLanding() {
                 </button>
                 <div className="px-4">
                   <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-full">
-                    Login
+                    <Link
+                href="/login"
+              >
+                Login
+              </Link>
                   </button>
                 </div>
               </div>
