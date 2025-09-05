@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Menu, X, Users, Calendar, MessageCircle, Upload, BarChart3, Bot, Bell, GraduationCap, Star, Check, Mail, ArrowRight, Zap, Shield, Clock } from 'lucide-react';
+import { Megaphone, FolderOpen, BellOff, ShieldCheck, Layers, Lock, ClipboardList, Menu, X, Users, CalendarDays, MessageCircle, Upload, BarChart3, Bot, Bell, GraduationCap, Star, Check, Mail, ArrowRight, Zap, Shield, Clock, UserCheck } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CampusConnectLanding() {
@@ -17,15 +17,25 @@ export default function CampusConnectLanding() {
   };
 
   const features = [
-    { icon: Bell, title: 'View Announcements', description: 'Stay updated with important campus announcements' },
-    { icon: Upload, title: 'Upload Files', description: 'Share documents and resources seamlessly' },
-    { icon: MessageCircle, title: 'Open Chat', description: 'Connect with your campus community' },
-    { icon: Users, title: 'Private Chat', description: 'Have private conversations with peers' },
-    { icon: Calendar, title: 'View Events', description: 'Never miss important campus events' },
-    { icon: BarChart3, title: 'Participate in Polls', description: 'Voice your opinion on campus matters' },
-    { icon: GraduationCap, title: 'Campus Threads', description: 'Join academic discussions' },
-    { icon: Bot, title: 'CampusAI Assistant', description: 'Get instant help with AI-powered support' }
+    { icon: UserCheck, title: "Role-based Communication", desc: "Students, Teachers, Admins, Alumni — each role has specific permissions." },
+    { icon: Users, title: "Smart Class & Batch Groups", desc: "Users are auto-added to groups based on enrollment." },
+    { icon: ClipboardList, title: "Attendance & Polls", desc: "Teachers can mark attendance, create polls, collect feedback." },
+    { icon: CalendarDays, title: "Events & Timetable", desc: "Built-in calendar with reminders for exams, schedules, events." },
+    { icon: Megaphone, title: "Noticeboard & Circulars", desc: "Central place for official notices (not lost in chats)." },
+    { icon: FolderOpen, title: "File Repository", desc: "Organized storage for assignments, notes, past papers." },
+    { icon: BellOff, title: "Distraction-Free Mode", desc: "Study Mode allows only academic notifications." },
+    { icon: ShieldCheck, title: "Admin Controls", desc: "Admins can restrict spam, monitor groups, set permissions." },
+    { icon: Layers, title: "Campus System Integration", desc: "SSO, library dues, fee reminders, grade updates." },
+    { icon: Lock, title: "Safety & Privacy", desc: "Verified profiles, no phone numbers, secure logins." },
   ];
+  const initialFeatures = [
+    { icon: Bell, title: 'View Announcements' },
+    { icon: MessageCircle, title: 'Open Chat' },
+    { icon: Users, title: 'Private Chat' },
+    { icon: BarChart3, title: 'Participate in Polls' },
+    { icon: GraduationCap, title: 'Campus Threads' },
+    { icon: Bot, title: 'CampusAI Assistant' }
+  ]
 
   const benefits = [
     { icon: Zap, title: 'Instant Connection', description: 'Connect with your entire campus community in real-time' },
@@ -102,11 +112,11 @@ export default function CampusConnectLanding() {
                   Contact
                 </button>
                 <div className="px-4">
-                  <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-full">
-                    <Link href="/login">
+                  <Link href="/login">
+                    <button className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white px-6 py-2 rounded-full">
                       Login
-                    </Link>
-                  </button>
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -154,7 +164,7 @@ export default function CampusConnectLanding() {
             <div className="relative max-w-4xl mx-auto px-2">
               <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-8 border border-purple-100">
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                  {features.slice(0, 4).map((feature, index) => (
+                  {initialFeatures.map((feature, index) => (
                     <div key={index} className="text-center p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-50 to-blue-50 hover:scale-105 transition-transform duration-300">
                       <feature.icon className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 mx-auto mb-2" />
                       <h3 className="font-semibold text-xs sm:text-sm text-gray-800">{feature.title}</h3>
@@ -276,7 +286,7 @@ export default function CampusConnectLanding() {
               <div className="text-center text-white">
                 <h3 className="text-xl sm:text-2xl font-bold mb-4">Campus Connect Pro</h3>
                 <div className="mb-6">
-                  <span className="text-4xl sm:text-5xl font-bold">₹499</span>
+                  <span className="text-4xl sm:text-5xl font-bold">₹599</span>
                   <span className="text-lg sm:text-xl opacity-80">/month</span>
                 </div>
                 <p className="text-purple-100 mb-6 sm:mb-8 text-sm sm:text-base">

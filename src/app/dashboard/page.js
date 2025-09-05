@@ -4,6 +4,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic'; // 🧠 Dynamic import for modal
+import {
+  ScrollText, FolderOpen, MessageCircle, Users, CalendarDays,
+  Vote, MessageSquareText, UserCheck, GraduationCap, ClipboardList,
+  Megaphone, BookOpen, Bot, BellOff
+} from "lucide-react";
 
 import { auth, db } from '../../../lib/firebase';
 import { signOut } from 'firebase/auth';
@@ -87,13 +92,19 @@ export default function DashboardPage() {
   };
 
   const quickLinks = [
-    { href: '/feed', label: 'View Announcements', icon: '📜' },
-    { href: '/files', label: 'Upload Files', icon: '📁' },
-    { href: '/chat', label: 'Open Chat', icon: '💬' },
-    { href: '/users', label: 'Private Chat', icon: '👥' },
-    { href: '/events', label: 'View Events', icon: '📅' },
-    { href: '/polls', label: 'Participate in Polls', icon: '🗳' },
-    { href: '/thread', label: 'Campus Threads', icon: '🧵' },
+    { href: '/feed', label: 'View Announcements', icon: ScrollText },
+    { href: '/files', label: 'Upload Files', icon: FolderOpen },
+    { href: '/chat', label: 'Open Chat', icon: MessageCircle },
+    { href: '/users', label: 'Private Chat', icon: Users },
+    { href: '/events', label: 'View Events', icon: CalendarDays },
+    { href: '/polls', label: 'Participate in Polls', icon: Vote },
+    { href: '/thread', label: 'Campus Threads', icon: MessageSquareText },
+    { href: '/roles', label: 'Role-based Access', icon: UserCheck },
+    { href: '/groups', label: 'Smart Class Groups', icon: GraduationCap },
+    { href: '/attendance', label: 'Mark Attendance', icon: ClipboardList },
+    { href: '/noticeboard', label: 'Noticeboard', icon: Megaphone },
+    { href: '/repos', label: 'Study Repository', icon: BookOpen },
+    { href: '/study-mode', label: 'Activate Study Mode', icon: BellOff },
   ];
 
   const adminLinks = [
@@ -117,7 +128,7 @@ export default function DashboardPage() {
               </div>
               <h1 className="text-2xl font-bold text-gray-900">Campus Connect</h1>
             </div>
-            
+
             {user && (
               <div className="flex items-center space-x-4">
                 <div className="text-right">
@@ -192,28 +203,32 @@ export default function DashboardPage() {
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900">Quick Access</h3>
                   </div>
-                  
+
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {quickLinks.map((link) => (
-                      <Link key={link.href} href={link.href}>
-                        <div className="group p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer">
-                          <div className="flex items-center space-x-3">
-                            <span className="text-2xl">{link.icon}</span>
-                            <span className="font-medium text-gray-900 group-hover:text-blue-600">
-                              {link.label}
-                            </span>
+                    {quickLinks.map((link) => {
+                      const Icon = link.icon; // assign the icon component
+                      return (
+                        <Link key={link.href} href={link.href}>
+                          <div className="group p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 cursor-pointer">
+                            <div className="flex items-center space-x-3">
+                              <Icon className="w-6 h-6 text-gray-600 group-hover:text-blue-600" />
+                              <span className="font-medium text-gray-900 group-hover:text-blue-600">
+                                {link.label}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    ))}
-                    
+                        </Link>
+                      );
+                    })}
+
+
                     {/* AI Assistant Button */}
                     <button
                       onClick={() => setShowAI(true)}
                       className="group p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-200 cursor-pointer text-left"
                     >
                       <div className="flex items-center space-x-3">
-                        <span className="text-2xl">🤖</span>
+                        <Bot className="w-7 h-7 text-gray-600 group-hover:text-purple-600" />
                         <span className="font-medium text-gray-900 group-hover:text-purple-600">
                           CampusAI Assistant
                         </span>
@@ -233,7 +248,7 @@ export default function DashboardPage() {
                       </div>
                       <h3 className="text-xl font-semibold text-gray-900">Admin Panel</h3>
                     </div>
-                    
+
                     <div className="space-y-3">
                       {adminLinks.map((link) => (
                         <Link key={link.href} href={link.href}>
@@ -266,7 +281,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl p-6 border border-gray-200">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
@@ -278,7 +293,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl p-6 border border-gray-200">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -290,7 +305,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="bg-white rounded-xl p-6 border border-gray-200">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
